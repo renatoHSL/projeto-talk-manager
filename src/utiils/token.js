@@ -1,6 +1,6 @@
 const token = () => {
-    const randomNumberToken = Math.random().toString(36).substring(2, 18); 
-    return randomNumberToken;
+    const random = Math.random().toString(16).substring(2) + Math.random().toString(16);
+    return random;
 };
 
 module.exports = token;
