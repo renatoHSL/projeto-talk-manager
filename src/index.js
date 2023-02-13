@@ -1,6 +1,12 @@
 const express = require('express');
-const { readWriteFile } = require('./utils/readWrite');
+const { readWriteFile, sendTalker } = require('./utils/readWrite');
 const token = require('./utils/token');
+const { authVal,
+  nomeVal,
+  idadeVal,
+  vistoVal,
+  notaVal,
+  talkVal } = require('./middlewares/validation');
 
 const app = express();
 app.use(express.json());
@@ -53,3 +59,16 @@ app.post('/login', (req, res) => {
 app.listen(PORT, () => {
   console.log('Online');
  });
+
+ app.post('/talker',
+ authVal,
+    nomeVal,
+    idadeVal,
+    vistoVal,
+    notaVal,
+    talkVal,
+  async (req, res) => {
+  const { body } = req;
+  const result = await sendTalker(body);
+  return res.status(201).json(result);
+  });

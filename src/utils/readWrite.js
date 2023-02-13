@@ -9,4 +9,19 @@ const readWriteFile = async () => {
     }
 };
 
-module.exports = { readWriteFile };
+async function sendTalker(body) {
+    const talkers = await readWriteFile();
+    const id = talkers[talkers.length - 1].id + 1;
+    const newTalker = {
+      id,
+      ...body,
+    };
+    talkers.push(newTalker);
+    await fs.writeFile('src/talker.json', JSON.stringify(talkers));
+    return newTalker;
+  }
+
+module.exports = { 
+    readWriteFile,
+    sendTalker,
+ };
