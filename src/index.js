@@ -1,6 +1,6 @@
 const express = require('express');
 const tokenGeneration = require('./utils/token');
-const { readWriteFile, sendTalker } = require('./utils/readWrite');
+const { readWriteFile, sendTalker, renewTalker, eraseTalker } = require('./utils/readWrite');
 const { authVal,
   nomeVal,
   idadeVal,
@@ -71,4 +71,24 @@ app.listen(PORT, () => {
   const { body } = req;
   const result = await sendTalker(body);
   return res.status(201).json(result);
+  });
+
+  app.put('/talker/:id',
+  authVal,
+  nomeVal,
+  idadeVal,
+  talkVal,
+  watchedAt,
+  notaVal,
+  async (req, res) => {
+    const { id } = req.params;
+    const { body } = req;
+    const newTalker = await renewTalker(body, Number(id));
+    res.status(200).json(newTalker);
+  });
+
+  app.delete('/talker/:id', authVal, async (req, res) => {
+    const { id } = req.params;
+    await eraseTalker(id);
+    res.sendStatus(204);
   });

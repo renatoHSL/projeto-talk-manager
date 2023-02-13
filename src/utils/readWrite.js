@@ -21,7 +21,31 @@ async function sendTalker(body) {
     return newPerson;
   }
 
+  async function renewTalker(body, id) {
+    const data = await readWriteFile();
+    const talkIt = data.findIndex((t) => t.id === id);
+    const brandTalk = { id, ...body };
+    const novoInd = data.map((t, index) => {
+      if (index === talkIt) {
+        return brandTalk;
+      }
+      return t;
+    });
+    await fs.writeFile('src/talker.json', JSON.stringify(novoInd));
+    return brandTalk;
+  }
+
+  const eraseTalker = async (id) => {
+    const oldData = await readWriteFile();
+    const arrayOfIds = oldData.map((e) => e.id);
+    const indexToRemove = arrayOfIds.indexOf(Number(id)); 
+    oldData.splice(indexToRemove, 1);
+    await fs.writeFile('src/talker.json', JSON.stringify(oldData));
+};
+
 module.exports = { 
     readWriteFile,
     sendTalker,
+    renewTalker,
+    eraseTalker,
  };
