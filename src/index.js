@@ -1,10 +1,10 @@
 const express = require('express');
+const tokenGeneration = require('./utils/token');
 const { readWriteFile, sendTalker } = require('./utils/readWrite');
-const token = require('./utils/token');
 const { authVal,
   nomeVal,
   idadeVal,
-  vistoVal,
+  watchedAt,
   notaVal,
   talkVal } = require('./middlewares/validation');
 
@@ -52,8 +52,8 @@ app.post('/login', (req, res) => {
   if (password.length < 6) {
     return res.status(400).json({ message: 'O "password" deve ter pelo menos 6 caracteres' });
   }
-  const data = token();
-  return res.status(200).json({ data });
+  const token = tokenGeneration();
+  return res.status(200).json({ token });
 });
 
 app.listen(PORT, () => {
@@ -64,9 +64,9 @@ app.listen(PORT, () => {
  authVal,
     nomeVal,
     idadeVal,
-    vistoVal,
-    notaVal,
     talkVal,
+    watchedAt,
+    notaVal,
   async (req, res) => {
   const { body } = req;
   const result = await sendTalker(body);

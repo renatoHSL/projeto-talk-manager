@@ -51,7 +51,7 @@ const authVal = (req, res, next) => {
     next();
   };
   
-  const vistoVal = (req, res, next) => {
+  const watchedAt = (req, res, next) => {
     const { talk } = req.body;
     const valida = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i;
   
@@ -79,7 +79,7 @@ const authVal = (req, res, next) => {
     authVal,
     nomeVal,
     idadeVal,
-    vistoVal,
+    watchedAt,
     notaVal,
     talkVal,
   };
