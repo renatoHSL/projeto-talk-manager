@@ -5,20 +5,20 @@ const readWriteFile = async () => {
         const aTalker = await fs.readFile('src/talker.json', 'utf-8');
         return JSON.parse(aTalker);
     } catch (error) {
-        return null;
+        console.error(error.message);
     }
 };
 
 async function sendTalker(body) {
-    const talkers = await readWriteFile();
-    const id = talkers[talkers.length - 1].id + 1;
-    const newTalker = {
+    const data = await readWriteFile();
+    const id = data[data.length - 1].id + 1;
+    const newPerson = {
       id,
       ...body,
     };
-    talkers.push(newTalker);
-    await fs.writeFile('src/talker.json', JSON.stringify(talkers));
-    return newTalker;
+    data.push(newPerson);
+    await fs.writeFile('src/talker.json', JSON.stringify(data));
+    return newPerson;
   }
 
 module.exports = { 

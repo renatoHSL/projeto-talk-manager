@@ -64,18 +64,12 @@ const authVal = (req, res, next) => {
     next();
   };
   
-  const validaRate = (rate) => (!Number.isInteger(rate) || rate < 1 || rate > 5);
-  
   const notaVal = (req, res, next) => {
-    const { talk: { rate } } = req.body;
-  
-    if (Number(rate) === 0) {
-      return res.status(400).json({ message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
-    }
-    if (!rate) {
+    const { rate } = req.body.talk;
+    if (rate === undefined) {
       return res.status(400).json({ message: 'O campo "rate" é obrigatório' });
     }
-    if (validaRate(rate)) {
+    if (!Number.isInteger(rate) || rate < 1 || rate > 5) {
       return res.status(400).json({ message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
     }
     next();
