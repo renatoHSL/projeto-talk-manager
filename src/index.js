@@ -1,6 +1,6 @@
 const express = require('express');
-const { readWriteFile } = require('./utiils/readWrite');
-const token = require('./utiils/token');
+const { readWriteFile } = require('./utils/readWrite');
+const token = require('./utils/token');
 
 const app = express();
 app.use(express.json());
